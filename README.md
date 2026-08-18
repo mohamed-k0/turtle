@@ -17,7 +17,7 @@
 
 ### dependencies:
 
-/>> This program uses **pynput** library to read the keyboard keys *globally*.
+>> This program uses **pynput** library to read the keyboard keys *globally*.
 
-/>> Parameters are declared using **declare_parameter()** function inherited from *Node* imported from *rclpy.node*.
+>> Parameters are declared using **declare_parameter()** function inherited from *Node* imported from *rclpy.node*.
 
