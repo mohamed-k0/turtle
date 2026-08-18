@@ -42,9 +42,13 @@ class Controller(Node):
         self.linear_speed = 2.0
         self.angular_speed = 2.0
 
+        # Start the keyboard listening
+        self.listener = keyboard.Listener(on_press=self.on_press)
+        self.listener.start()
+
+        print("Controller started. Use W-A-S-D")
+
         
-
-
 
 
         
