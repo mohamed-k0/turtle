@@ -73,8 +73,24 @@ class Controller(Node):
         except AttributeError:
             pass
 
+    def callback_color(self, msg):
 
-        
+        # Initialize a String message that holds the dominant color
+        color_msg = String()
+
+        if msg.r > msg.g and msg.r > msg.b:
+            dominant_color = "Red"
+        elif msg.g > msg.r and msg.g > msg.b:
+            dominant_color = "Green"
+        elif msg.b > msg.r and msg.b > msg.g:
+            dominant_color = "Blue"
+        else:
+            dominant_color = "Equal"
+
+        # get the value of dominant color and store it in String message
+        color_msg.data = dominant_color
+        # Publish the dominant color message
+        self.dominant_publisher.publish(color_msg)
 
 def main():
 
