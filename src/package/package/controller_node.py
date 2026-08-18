@@ -43,12 +43,35 @@ class Controller(Node):
         self.angular_speed = 2.0
 
         # Start the keyboard listening
-        self.listener = keyboard.Listener(on_press=self.on_press)
+        self.listener = keyboard.Listener(on_press=self.key_press)
         self.listener.start()
 
         print("Controller started. Use W-A-S-D")
 
-        
+        # Define a method to read keyboard input and publish velocity commands
+
+    def key_press(self, key):
+        # Defining a message of type Twist
+        msg = Twist()
+        # Handle key press exceptions
+        try:
+            # Checking key pressed case insensitive
+            if key.char.lower() == 'w':
+                msg.linear.x = self.linear_speed
+            elif key.char.lower() == 's':
+                msg.linear.x = -self.linear_speed
+            elif key.char.lower() == 'a':
+                msg.angular.z = self.angular_speed
+            elif key.char.lower() == 'd':
+                msg.angular.z = -self.angular_speed
+            else:
+                return  # Ignore other keys
+
+            # Publish the velocity command
+            self.vel_publisher.publish(msg)
+
+        except AttributeError:
+            pass
 
 
         
