@@ -24,6 +24,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'controller_node = package.controller_node:main',
         ],
     },
 )

@@ -32,6 +32,12 @@ class Controller(Node):
 
         self.color_subscriber = self.create_subscription(Color, color_sensor_topic, self.callback_color, 10)
 
+        # Setting Speeds
+        self.linear_speed = 2.0
+        self.angular_speed = 2.0
+
+        
+
 
 
 
@@ -44,6 +50,10 @@ class Controller(Node):
 def main():
 
     rclpy.init()
+    node = Controller()
+
+    rclpy.spin(node)
+
 
 
 
