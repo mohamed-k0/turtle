@@ -20,7 +20,10 @@ def generate_launch_description():
     turtlesim_node = Node(
         package='turtlesim',
         executable='turtlesim_node',
-        name='turtlesim_node'
+        name='turtlesim_node',
+        remappings=[
+                ('/turtle1/cmd_vel', '/cmd_vel')
+            ]
     )
 
 

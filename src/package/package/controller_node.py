@@ -55,28 +55,27 @@ class Controller(Node):
         msg = Twist()
         # Handle key press exceptions
         try:
-            # Checking key pressed case insensitive
-            if key.char.lower() == 'w':
+            # Checking key pressed 
+            if key.char == 'w':
                 msg.linear.x = self.linear_speed
-            elif key.char.lower() == 's':
+            elif key.char == 's':
                 msg.linear.x = -self.linear_speed
-            elif key.char.lower() == 'a':
+            elif key.char == 'a':
                 msg.angular.z = self.angular_speed
-            elif key.char.lower() == 'd':
+            elif key.char == 'd':
                 msg.angular.z = -self.angular_speed
             else:
                 return  # Ignore other keys
 
             # Publish the velocity command
             self.vel_publisher.publish(msg)
+
         # Neglecting undefined key presses
         except AttributeError: 
             pass
 
     def callback_color(self, msg):
 
-        # Initialize a String message that holds the dominant color
-        color_msg = String()
 
         if msg.r > msg.g and msg.r > msg.b:
             dominant_color = "Red"
@@ -87,15 +86,16 @@ class Controller(Node):
         else:
             dominant_color = "Equal"
 
+        self.get_logger().info(f"Dominant Color: {dominant_color}")
         # get the value of dominant color and store it in String message
+        color_msg = String()
         color_msg.data = dominant_color
         # Publish the dominant color message
         self.dominant_publisher.publish(color_msg)
-
+        
     
 
 def main():
-
     rclpy.init()
     node = Controller()
 

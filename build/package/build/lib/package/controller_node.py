@@ -16,7 +16,7 @@ class Controller(Node):
 
         # Declare parameters to prevent hard-coding
 
-        self.declare_parameter('cmd_vel_topic', '/cmd_vel')  # declare a parameter of name cmd_vel_topic with default value /cmd_vel
+        self.declare_parameter('cmd_vel_topic', '/turtle1/cmd_vel')  # declare a parameter of name cmd_vel_topic with default value /cmd_vel
         self.declare_parameter('dominant_color_topic', '/dominant_color')
         self.declare_parameter('color_sensor_topic', '/turtle1/color_sensor')
 
@@ -38,6 +38,9 @@ class Controller(Node):
         # Declare Publisher of dominant color
         self.dominant_publisher = self.create_publisher(String, dominant_color_topic, 10)
 
+
+        self.get_logger().info(f"Controller active. Target velocity topic: '{cmd_vel_topic}'")
+
         # Setting Speeds
         self.linear_speed = 2.0
         self.angular_speed = 2.0
@@ -51,32 +54,36 @@ class Controller(Node):
         # Define a method to read keyboard input and publish velocity commands
 
     def key_press(self, key):
+        self.get_logger().info(f"Key pressed: {key}")
         # Defining a message of type Twist
         msg = Twist()
         # Handle key press exceptions
         try:
-            # Checking key pressed case insensitive
-            if key.char.lower() == 'w':
+            # Checking key pressed 
+            if key.char == 'w':
                 msg.linear.x = self.linear_speed
-            elif key.char.lower() == 's':
+            elif key.char == 's':
                 msg.linear.x = -self.linear_speed
-            elif key.char.lower() == 'a':
+            elif key.char == 'a':
                 msg.angular.z = self.angular_speed
-            elif key.char.lower() == 'd':
+            elif key.char == 'd':
                 msg.angular.z = -self.angular_speed
             else:
                 return  # Ignore other keys
 
+            sub_count = self.vel_publisher.get_subscription_count()
+            self.get_logger().info(
+            f"Key '{key.char}' pressed -> Publishing Twist (x: {msg.linear.x}, z: {msg.angular.z}) | Connected Subscribers: {sub_count}"
+            )
             # Publish the velocity command
             self.vel_publisher.publish(msg)
+
         # Neglecting undefined key presses
         except AttributeError: 
             pass
 
     def callback_color(self, msg):
 
-        # Initialize a String message that holds the dominant color
-        color_msg = String()
 
         if msg.r > msg.g and msg.r > msg.b:
             dominant_color = "Red"
@@ -87,15 +94,16 @@ class Controller(Node):
         else:
             dominant_color = "Equal"
 
+        self.get_logger().info(f"Dominant Color: {dominant_color}")
         # get the value of dominant color and store it in String message
+        color_msg = String()
         color_msg.data = dominant_color
         # Publish the dominant color message
         self.dominant_publisher.publish(color_msg)
-
+        
     
 
 def main():
-
     rclpy.init()
     node = Controller()
 
