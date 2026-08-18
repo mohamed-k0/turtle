@@ -11,7 +11,7 @@ setup(
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
-    install_requires=['setuptools'],
+    install_requires=['setuptools','pynput'],
     zip_safe=True,
     maintainer='mohamed-khaled',
     maintainer_email='mohamed.khaled.sh22@gmail.com',
