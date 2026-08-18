@@ -92,6 +92,8 @@ class Controller(Node):
         # Publish the dominant color message
         self.dominant_publisher.publish(color_msg)
 
+    
+
 def main():
 
     rclpy.init()
@@ -99,15 +101,8 @@ def main():
 
     rclpy.spin(node)
 
-
-
-
-    ...
-
-
-
-
-
+    node.destroy_node()
+    rclpy.shutdown()
 
 
 if __name__ == "__main__":
