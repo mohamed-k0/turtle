@@ -69,8 +69,8 @@ class Controller(Node):
 
             # Publish the velocity command
             self.vel_publisher.publish(msg)
-
-        except AttributeError:
+        # Neglecting undefined key presses
+        except AttributeError: 
             pass
 
     def callback_color(self, msg):

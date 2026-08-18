@@ -15,7 +15,7 @@ setup(
     zip_safe=True,
     maintainer='mohamed-khaled',
     maintainer_email='mohamed.khaled.sh22@gmail.com',
-    description='TODO: Package description',
+    description='Turtle controller node',
     license='TODO: License declaration',
     extras_require={
         'test': [
