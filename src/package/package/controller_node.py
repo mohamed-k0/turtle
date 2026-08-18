@@ -6,6 +6,8 @@ from geometry_msgs.msg import Twist
 from turtlesim.msg import Color
 from std_msgs.msg import String
 
+from pynput import keyboard
+
 
 
 class Controller(Node):
@@ -24,13 +26,17 @@ class Controller(Node):
         dominant_color_topic = self.get_parameter('dominant_color_topic').value
         color_sensor_topic = self.get_parameter('color_sensor_topic').value
 
-        # Declare Sublisher of velocity commands
+        # Declare Publisher of velocity commands
 
         self.vel_publisher = self.create_publisher(Twist, cmd_vel_topic, 10)
 
         # Declare Subscriber to color sensor of turtle
 
         self.color_subscriber = self.create_subscription(Color, color_sensor_topic, self.callback_color, 10)
+
+
+        # Declare Publisher of dominant color
+        self.dominant_publisher = self.create_publisher(String, dominant_color_topic, 10)
 
         # Setting Speeds
         self.linear_speed = 2.0
@@ -41,10 +47,6 @@ class Controller(Node):
 
 
 
-    def move_forward(self):
-        msg = Twist()
-        msg.linear.x = 1.0
-        self.publisher.publish(msg)
         
 
 def main():
