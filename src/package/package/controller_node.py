@@ -48,8 +48,7 @@ class Controller(Node):
 
         print("Controller started. Use W-A-S-D")
 
-        # Define a method to read keyboard input and publish velocity commands
-
+    # Define a method to read keyboard input and publish velocity commands
     def key_press(self, key):
         # Defining a message of type Twist
         msg = Twist()
